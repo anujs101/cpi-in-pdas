@@ -2,6 +2,8 @@
 name = "cpi-in-pdas"
 version = "0.1.0"
 edition = "2024"
+[lib]
+crate-type = ["cdylib"]
 
 [dependencies]
 solana-program = "2.3.0"
