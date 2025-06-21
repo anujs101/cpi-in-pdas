@@ -14,7 +14,7 @@ import {
 test("one transfer", () => {
 	const svm = new LiteSVM();
 	const payer = Keypair.generate();
-	svm.airdrop(payer.publicKey, BigInt(LAMPORTS_PER_SOL));
+	svm.airdrop(payer.publicKey, BigInt(2*LAMPORTS_PER_SOL));
     const programId = Keypair.generate();
     svm.addProgramFromFile(programId.publicKey,"../target/contract.so");
     const seeds = [Buffer.from("client"), payer.publicKey.toBuffer()];
@@ -33,5 +33,12 @@ test("one transfer", () => {
 	tx.add(ixs);
     tx.feePayer=payer.publicKey;
 	tx.sign(payer);
-	svm.sendTransaction(tx);
+	let res = svm.sendTransaction(tx);
+    console. log (res.toString())
+        test ("should create pda", () => {
+            const balance = svm.getBalance(pda);
+            console.log(balance);
+            expect(Number(balance)).toBeGreaterThan(0);
+            // expect(Number(balance)).toBe(1000000000);
+        });
 });
